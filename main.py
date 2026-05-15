@@ -43,7 +43,7 @@ def drawWindows(red,yellow,red_bullets, yellow_bullets, red_health, yellow_healt
     screen.blit(red_health_text,(700,10))
     screen.blit(RED_SPACESHIP, (red.x, red.y))
 
-    yellow_health_text = HEALTH_FONT.RENDER("Health:" + str(yellow_health),1, WHITE)
+    yellow_health_text = HEALTH_FONT.render("Health:" + str(yellow_health),1, WHITE)
     screen.blit(yellow_health_text, (10,10))
     screen.blit(YELLOW_SPACESHIP, (yellow.x, yellow.y))
 
@@ -130,7 +130,22 @@ def main():
                 red_health -= 1
             if event.type == YELLOW_HIT:
                 yellow_health -= 1
-
+        winnerText = ""
+        if red_health < 0:
+            winnerText = "Yellow Wins"
+        if yellow_health < 0:
+            winnerText = "Red Wins"
+        if winnerText != "":
+            drawWinner(winnerText)
+            break
+        keys_pressed = pygame.key.get_pressed()
+        yellowHandleMovement(keys_pressed, yellow)
+        redHandleMovement(keys_pressed, red)
+        handleBullets(yellow_bullets, red_bullets, yellow, red)
+        drawWindows(red,yellow,red_bullets, yellow_bullets, red_health, yellow_health)
+    main()
+if __name__ == "__main__":
+    main()
 
 
 
